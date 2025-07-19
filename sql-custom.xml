@@ -1,0 +1,31 @@
+<group name="sql_injection,attack">
+  <rule id="500201" level="10">
+    <if_sid>31100</if_sid>
+    <regex type="pcre2">'|%27|--|#|%23</regex>
+    <description>SQLi: Detected quote/comment attempt</description>
+  </rule>
+
+  <rule id="500202" level="10">
+    <if_sid>31100</if_sid>
+    <regex type="pcre2">=(\s*)('|%27|--|;|%3B)</regex>
+    <description>SQLi: Assignment followed by SQL meta character</description>
+  </rule>
+
+  <rule id="500203" level="12">
+    <if_sid>31100</if_sid>
+    <regex type="pcre2">\b(SELECT|INSERT|UPDATE|DELETE|DROP|FROM|WHERE|UNION)\b</regex>
+    <description>SQLi: SQL keyword detected</description>
+  </rule>
+
+  <rule id="500204" level="12">
+    <if_sid>31100</if_sid>
+    <regex type="pcre2">\b(OR|AND)\b\s+[\w\']+\s*=\s*[\w\']+</regex>
+    <description>SQLi: Logic-based injection attempt</description>
+  </rule>
+
+  <rule id="500205" level="15">
+    <if_sid>31100</if_sid>
+    <regex type="pcre2">\b(exec|execute|sp_executesql|xp_cmdshell|information_schema|sysobjects|syscolumns)\b</regex>
+    <description>SQLi: Dangerous SQL function or table</description>
+  </rule>
+</group>
