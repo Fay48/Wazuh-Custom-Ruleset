@@ -1,0 +1,36 @@
+<group name="xss_attack,attack">
+  <!-- Case-insensitive script tag -->
+  <rule id="500301" level="12">
+    <if_sid>31100</if_sid>
+    <regex type="pcre2">(?i)&lt;script.*?&gt;|%3Cscript%3E</regex>
+    <description>XSS: Case-insensitive detection of script tag</description>
+  </rule>
+
+  <!-- Inline JS event handlers (onerror, onload...) -->
+  <rule id="500302" level="10">
+    <if_sid>31100</if_sid>
+    <regex type="pcre2">(?i)\bon(?:error|load|click|mouseover|focus|blur)=</regex>
+    <description>XSS: Case-insensitive inline event handler</description>
+  </rule>
+
+  <!-- javascript: URI scheme -->
+  <rule id="500303" level="10">
+    <if_sid>31100</if_sid>
+    <regex type="pcre2">(?i)javascript\s*:</regex>
+    <description>XSS: javascript URI scheme (case-insensitive)</description>
+  </rule>
+
+  <!-- Encoded characters (obfuscation) -->
+  <rule id="500304" level="8">
+    <if_sid>31100</if_sid>
+    <regex type="pcre2">(?i)(&#x?[0-9a-f]+;|%[0-9a-f]{2}){2,}</regex>
+    <description>XSS: Encoded char sequence (possible obfuscation)</description>
+  </rule>
+
+  <!-- Image tag with JS event -->
+  <rule id="500305" level="12">
+    <if_sid>31100</if_sid>
+    <regex type="pcre2">(?i)&lt;img\s+[^&gt;]*on\w+=|%3Cimg%20[^%3E]*on\w+=</regex>
+    <description>XSS: Image tag with JS event (case-insensitive)</description>
+  </rule>
+</group>
